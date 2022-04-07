@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: print-number-deployment-21
+  labels:
+    app: print-number
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: print-number
+  template:
+    metadata:
+      labels:
+        app: print-number
+    spec:
+      containers:
+      - name: print-number
+        image: number:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: START_INDEX
+          value: "21"
+        - name: END_INDEX
+          value: "41"
