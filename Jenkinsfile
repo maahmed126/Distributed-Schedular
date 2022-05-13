@@ -1,6 +1,3 @@
-
-
-   
 pipeline {
     agent any
 
@@ -35,13 +32,11 @@ pipeline {
                         }
                     }
                 }
-                }
                 stage("Started Deployment to QA") {
                     steps {
                         sh 'echo Started QA release'
                     }
                 }
-
                 stage('Approval to UAT') {
                     // no agent is used, so executors are not used up when waiting for approvals
                     agent none
@@ -52,13 +47,11 @@ pipeline {
                         }
                     }
                 }
-
                 stage("Started Deployment to UAT") {
                     steps {
                         sh 'echo Started UAT release'
                     }
                 }
-
                 stage('Approval to PROD') {
                     // no agent is used, so executors are not used up when waiting for approvals
                     agent none
@@ -69,23 +62,11 @@ pipeline {
                         }
                     }
                 }
-
                 stage("Started Deployment to PROD") {
                     steps {
                         sh 'echo Started PROD release'
                     }
                 }
-            }
-        }
-    }
-    post {
-        always {
-            /* clean up our workspace */
-            deleteDir()
-
-            /* clean up tmp directory */
-            dir("${workspace}@tmp") {
-                deleteDir()
             }
         }
     }
