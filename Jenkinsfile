@@ -38,7 +38,7 @@ pipeline {
                 stage("Started Deployment to PROD") {
                     steps {
                         sh 'echo Started PROD release'
-                        sh 'exit 1'
+                        sh 'exit 0'
                     }
                 }
             }   
