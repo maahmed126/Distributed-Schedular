@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DEPLOY_TO = "${env.BRANCH_NAME == "release/sprint/" ? "release" : env.BRANCH_NAME == "develop" ? "staging" : ""}"
+        DEPLOY_TO = "${env.BRANCH_NAME == "release/sprint/hotfix" ? "realease" : env.BRANCH_NAME == "develop" ? "staging" : ""}"
     }
     
     stages {
