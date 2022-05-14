@@ -15,7 +15,7 @@ pipeline {
                     }
                 }
         stage('Hotfix Deployment') {
-              when { expression { env.DEPLOY_TO == "hotfix" } }
+              when { branch "release/sprint/hotfix" }
             
               stages('Hotfix Deployment Flow') {
                 
@@ -46,7 +46,7 @@ pipeline {
             // when { expression { params.BRANCH_NAME == 'main' } }
             // when { expression { env.DEPLOY_TO == "release" } }
         stage('Release Deployment') {
-               when { branch "release/sprint/*" && branch ! "release/sprint/hotfix" }            
+               when { branch "release/sprint/*" }            
             
                 stages('Release Deployment Flow') {
 
