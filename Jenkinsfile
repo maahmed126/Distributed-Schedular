@@ -38,10 +38,10 @@ pipeline {
                 stage("Started Deployment to PROD") {
                     steps {
                         sh 'echo Started PROD release'
+                        sh 'exit 1'
                     }
                 }
-            }
-                       sh 'exit 1'
+            }   
         }
         // when { branch pattern: "main", comparator: "REGEXP"}
             // when { expression { params.BRANCH_NAME == 'main' } }
