@@ -23,7 +23,7 @@ pipeline {
                     steps {
                         sh 'echo Started QA release'
                     }
-                  return 1
+                  return 0
                 }
                 
                stage('Approval to PROD') {
