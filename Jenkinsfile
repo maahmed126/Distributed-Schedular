@@ -15,7 +15,7 @@ pipeline {
                     }
                 }
         stage('Hotfix Deployment') {
-              when { return branch "release/sprint/hotfix" }
+              when '{ return branch "release/sprint/hotfix" }'
             
               stages('Hotfix Deployment Flow') {
                 
