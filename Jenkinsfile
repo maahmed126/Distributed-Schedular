@@ -15,7 +15,7 @@ pipeline {
                     }
                 }
         stage('Hotfix Deployment') {
-              when '{ return branch "release/sprint/hotfix" }'
+              when { branch "release/sprint/hotfix" }
             
               stages('Hotfix Deployment Flow') {
                 
@@ -23,6 +23,7 @@ pipeline {
                     steps {
                         sh 'echo Started QA release'
                     }
+                  return 1
                 }
                 
                stage('Approval to PROD') {
