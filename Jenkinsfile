@@ -14,9 +14,6 @@ pipeline {
                         sh 'echo Started DEV release'
                     }
                 }
-
-    }
-    stages{
         
         stage('Hotfix Deployment') {
               when { branch "release/sprint/*" }
