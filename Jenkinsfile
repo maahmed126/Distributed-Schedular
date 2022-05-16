@@ -1,4 +1,4 @@
-ipeline {
+pipeline {
     agent any
 
     environment {
@@ -14,8 +14,8 @@ ipeline {
                         sh 'echo Started DEV release'
                     }
                 }
-        stage('1 choice Hotfix Deployment') {
-              when { branch "release/sprint/*" }
+        stage('Hotfix Deployment') {
+              when { branch "release/sprint/hotfix" }
             
               stages('Hotfix Deployment Flow') {
                 
