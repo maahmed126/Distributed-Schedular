@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        RELEASE = "${env.BRANCH_NAME == "develop" || env.BRANCH_NAME == "release/sprint/hotfix"}"
-        DEPLOY_TO = "${env.BRANCH_NAME == "release/sprint/hotfix" ? "hotfix" : env.BRANCH_NAME == "develop" ? "staging" : ""}"
+        RELEASE = "${env.BRANCH_NAME == "develop" || env.BRANCH_NAME == "release/sprint/*"}"
+        DEPLOY_TO = "${env.BRANCH_NAME == "release/sprint/*" ? "hotfix" : env.BRANCH_NAME == "develop" ? "staging" : ""}"
     }
     
     stages {
@@ -15,7 +15,7 @@ pipeline {
                     }
                 }
         stage('Hotfix Deployment') {
-              when { branch "release/sprint/hotfix" }
+              when { branch "release/sprint/*" }
             
               stages('Hotfix Deployment Flow') {
                 
