@@ -1,5 +1,5 @@
 # Distributed-Schedular
-docker run -p 8080:8080 -e START_INDEX=1 -e END_INDEX=1000 print_number
+docker run -d -p 8080:8080 -e START_INDEX=1 -e END_INDEX=1000 print_number
 
 
 docker-compose up -d --scale app=5
