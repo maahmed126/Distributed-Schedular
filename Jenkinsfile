@@ -1,6 +1,6 @@
 pipeline {
     agent any
-
+   
     environment {
         RELEASE = "${env.BRANCH_NAME == "develop" || env.BRANCH_NAME == "release/sprint/*"}"
         DEPLOY_TO = "${env.BRANCH_NAME == "release/sprint/*" ? "hotfix" : env.BRANCH_NAME == "develop" ? "staging" : ""}"
@@ -14,6 +14,8 @@ pipeline {
                         sh 'echo Started DEV release'
                     }
                 }
+        properties([parameters([choice(choices: ['Hotfix Deployment', 'Release Deployment'], description: 'Select Deployment to Build', name: 'stage')])])
+        
         stage('Hotfix Deployment') {
               when { branch "release/sprint/*" }
             
