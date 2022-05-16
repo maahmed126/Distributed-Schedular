@@ -1,11 +1,6 @@
 pipeline {
+
     agent any
-   
-    environment {
-        RELEASE = "${env.BRANCH_NAME == "develop" || env.BRANCH_NAME == "release/sprint/*"}"
-        DEPLOY_TO = "${env.BRANCH_NAME == "release/sprint/*" ? "hotfix" : env.BRANCH_NAME == "develop" ? "staging" : ""}"
-    }
-    
     stages {
 
         stage('Develop Deployment') {
