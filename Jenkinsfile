@@ -15,11 +15,8 @@ ipeline {
                     }
                 }
         stage('1 choice Hotfix Deployment') {
-              when { branch "release/sprint/*"
-              anyOf {
-                  choice == '1'
-               }
-              }
+              when { branch "release/sprint/*" }
+            
               stages('Hotfix Deployment Flow') {
                 
               stage("Started Deployment to QA") {
