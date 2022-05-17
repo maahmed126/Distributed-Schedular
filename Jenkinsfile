@@ -35,13 +35,14 @@ pipeline {
                     }
                 }
                 stage("Started Deployment to QA") {
-                   if (Environment == 'Release')
+                   if (Environment == 'Release'){
                     steps {
                         sh 'echo Started QA release'
                     }
                 }
+                }
                 stage('Approval to UAT') {
-                   if (Environment == 'Release')
+                   if (Environment == 'Release'){
                     // no agent is used, so executors are not used up when waiting for approvals
                     agent none
                     steps {
@@ -51,14 +52,15 @@ pipeline {
                         }
                     }
                 }
+                }
                 stage("Started Deployment to UAT") {
-                    if (Environment == 'Release')
+                    if (Environment == 'Release'){
                     steps {
                         sh 'echo Started UAT release'
                     }
-                }
+                }}
                 stage('Approval to PROD') {
-                    if (Environment == 'Release')
+                    if (Environment == 'Release'){
                     // no agent is used, so executors are not used up when waiting for approvals
                     agent none
                     steps {
@@ -66,7 +68,7 @@ pipeline {
                             def approver = input id: 'Deploy', message: 'Deploy to PROD?', submitter: 'pavan.prabhu,admin', submitterParameter: 'deploy_approver'
                             echo "This deployment was approved by ${approver}"
                         }
-                    }
+                    }}
                 }
                 stage("Started Deployment to PROD") {
                     steps {
