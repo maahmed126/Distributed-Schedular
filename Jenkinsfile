@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DEPLOY_TO = "${env.BRANCH_NAME == "release/sprint/" ? "release" : env.BRANCH_NAME == "develop" ? "staging" : ""}"
+       RELEASE = "${env.BRANCH_NAME == "release/sprint/" || env.BRANCH_NAME == "main"}"
+        DEPLOY_TO = "${env.BRANCH_NAME == "release/sprint/" ? "release" : env.BRANCH_NAME == "main" ? "production" : ""}"
     }
     
     stages {
@@ -34,14 +35,13 @@ pipeline {
                     }
                 }
                 stage("Started Deployment to QA") {
-                    when {expression { params.ENVIRONMENT == "Release" } }
+                    when { ENVIRONMENT == "Release" } 
                     steps {
                         sh 'echo Started QA release'
-                        sh 'echo $ENVIRONMENT'
                     }
                 }
                 stage('Approval to UAT') {
-                    //when {expression { params.ENVIRONMENT == "Release" } }
+                    when { ENVIRONMENT == "Release" }
                     // no agent is used, so executors are not used up when waiting for approvals
                     agent none
                     steps {
@@ -52,13 +52,13 @@ pipeline {
                     }
                 }
                 stage("Started Deployment to UAT") {
-                    when {expression { params.ENVIRONMENT == "Release" } }
+                    when { ENVIRONMENT == "Release"  }
                     steps {
                         sh 'echo Started UAT release'
                     }
                 }
                 stage('Approval to PROD') {
-                    when {expression { params.ENVIRONMENT == "Release" } }
+                    when { ENVIRONMENT == "Release" } }
                     // no agent is used, so executors are not used up when waiting for approvals
                     agent none
                     steps {
