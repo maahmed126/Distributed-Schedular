@@ -37,10 +37,11 @@ pipeline {
                     when {expression { params.ENVIRONMENT == "Release" } }
                     steps {
                         sh 'echo Started QA release'
+                        sh 'echo $ENVIRONMENT'
                     }
                 }
                 stage('Approval to UAT') {
-                    when {expression { params.ENVIRONMENT == "Release" } }
+                    //when {expression { params.ENVIRONMENT == "Release" } }
                     // no agent is used, so executors are not used up when waiting for approvals
                     agent none
                     steps {
@@ -62,7 +63,7 @@ pipeline {
                     agent none
                     steps {
                         script {
-                            def approver = input id: 'Deploy', message: 'Deploy to PROD?', submitter: 'pavan.prabhu,admin', submitterParameter: 'deploy_approver'
+                            def approver = input id: 'Deploy', message: 'Deploy to PROD?', submitter: 'admin', submitterParameter: 'deploy_approver'
                             echo "This deployment was approved by ${approver}"
                         }
                     }
