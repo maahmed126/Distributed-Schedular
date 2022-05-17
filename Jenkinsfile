@@ -32,6 +32,9 @@ pipeline {
                              def approver = input id: 'Deploy', message: 'Deploy to QA?', submitter: 'admin', submitterParameter: 'deploy_approver'
                              echo "This deployment was approved by ${approver}"
                              echo "$INPUT_PARAMS.ENVIRONMENT"
+                             echo "$params.ENVIRONMENT"
+                             echo "$choices"
+                             echo "$INPUT_PARAMS.$choices"
                             
                         }
                     }
