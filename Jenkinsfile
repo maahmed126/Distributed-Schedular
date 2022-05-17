@@ -15,9 +15,7 @@ pipeline {
         stage('Hotfix Deployment and Release Deployment') {
             parallel {
                 stage("HotfixDeployment") {
-                    agent {
-                        label "HotfixDeployment"
-                    }
+                    agent none
                 stage("Started Deployment to QA") {
                     steps {
                         sh 'echo Started QA release'
