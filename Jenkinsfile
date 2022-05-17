@@ -30,23 +30,19 @@ pipeline {
                         script {
                             def INPUT_PARAMS = input message: 'Approval for Release Deployment', ok: 'Next', parameters: [choice(name: 'ENVIRONMENT', choices: ['Release','Hotfix'].join('\n'),description: 'Please select the way of Deployment')]
                              def approver = input id: 'Deploy', message: 'Deploy to QA?', submitter: 'admin', submitterParameter: 'deploy_approver'
-                             echo "This deployment was approved by ${approver}"
-                            echo "${INPUT_PARAMS.ENVIRONMENT}"
-                            echo "${params.ENVIRONMENT}"
-                            echo "${choices}"
-                             echo "$INPUT_PARAMS.$choices"
+                             echo "This deployment was approved by ${approver}"                         
                             
                         }
                     }
                 }
                 stage("Started Deployment to QA") {
-                    when {expression { params.ENVIRONMENT == 'Release' } }
+                    when {expression { INPUT_PARAMS == 'Release' } }
                     steps {
                         sh 'echo Started QA release'
                     }
                 }
                 stage('Approval to UAT') {
-                    when {expression { params.ENVIRONMENT == 'Release' } }
+                    when {expression { INPUT_PARAMS == 'Release' } }
                     // no agent is used, so executors are not used up when waiting for approvals
                     agent none
                     steps {
@@ -57,13 +53,13 @@ pipeline {
                     }
                 }
                 stage("Started Deployment to UAT") {
-                    when {expression { params.ENVIRONMENT == 'Release' } }
+                    when {expression { INPUT_PARAMS == 'Release' } }
                     steps {
                         sh 'echo Started UAT release'
                     }
                 }
                 stage('Approval to PROD') {
-                    when {expression { params.ENVIRONMENT == 'Release' } }
+                    when {expression { INPUT_PARAMS == 'Release' } }
                     // no agent is used, so executors are not used up when waiting for approvals
                     agent none
                     steps {
