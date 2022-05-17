@@ -35,13 +35,13 @@ pipeline {
                     }
                 }
                 stage("Started Deployment to QA") {
-                    if { ${ENVIRONMENT} == "Release" } 
+                   if (Environment == 'Release')
                     steps {
                         sh 'echo Started QA release'
                     }
                 }
                 stage('Approval to UAT') {
-                    if { ${ENVIRONMENT} == "Release" }
+                   if (Environment == 'Release')
                     // no agent is used, so executors are not used up when waiting for approvals
                     agent none
                     steps {
@@ -52,18 +52,18 @@ pipeline {
                     }
                 }
                 stage("Started Deployment to UAT") {
-                    if { ${ENVIRONMENT} == "Release"  }
+                    if (Environment == 'Release')
                     steps {
                         sh 'echo Started UAT release'
                     }
                 }
                 stage('Approval to PROD') {
-                    if { ${ENVIRONMENT} == "Release" } }
+                    if (Environment == 'Release')
                     // no agent is used, so executors are not used up when waiting for approvals
                     agent none
                     steps {
                         script {
-                            def approver = input id: 'Deploy', message: 'Deploy to PROD?', submitter: 'admin', submitterParameter: 'deploy_approver'
+                            def approver = input id: 'Deploy', message: 'Deploy to PROD?', submitter: 'pavan.prabhu,admin', submitterParameter: 'deploy_approver'
                             echo "This deployment was approved by ${approver}"
                         }
                     }
@@ -76,3 +76,4 @@ pipeline {
             }
         }
     }
+}
