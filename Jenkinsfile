@@ -22,12 +22,13 @@ pipeline {
                when { branch "release/sprint/*" }            
             
                 stages('Release Deployment Flow') {
-
+                properties([parameters([choice(choices: ['Release', 'Hotfix'], description: 'Please select the way of Deployment', name: 'ENVIRONMENT')])])                    
                 stage('Approval to QA') {
                     // no agent is used, so executors are not used up when waiting for approvals
+                    
                     agent none
                     steps {
-                        properties([parameters([choice(choices: ['Release', 'Hotfix'], description: 'Please select the way of Deployment', name: 'ENVIRONMENT')])])                    
+                       
                         script {       
                             
                             // def INPUT_PARAMS = input message: 'Approval for Release Deployment', ok: 'Next', parameters: [choice(name: 'ENVIRONMENT', choices: ['Release','Hotfix'].join('\n'),description: 'Please select the way of Deployment')]
