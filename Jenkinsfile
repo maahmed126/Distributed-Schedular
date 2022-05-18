@@ -3,7 +3,7 @@ pipeline {
 
     environment {
        RELEASE = "${env.BRANCH_NAME == "release/sprint/" || env.BRANCH_NAME == "develop"}"
-        DEPLOY_TO = "${env.BRANCH_NAME == "release/sprint/" ? "release" : env.BRANCH_NAME == "main" ? "production" : ""}"
+        DEPLOY_TO = "${env.BRANCH_NAME == "release/sprint/" ? "release" : ""}"
     }
     
     stages {
@@ -25,10 +25,12 @@ pipeline {
 
                 stage('Approval to QA') {
                     // no agent is used, so executors are not used up when waiting for approvals
+                    
                     agent none
                     steps {
+                       
                         script {       
-                            def INPUT_PARAMS = input message: 'Approval for Release Deployment', ok: 'Next',properties([parameters([choice(choices: ['Release', 'Hotfix'], description: 'Please select the way of Deployment', name: 'ENVIRONMENT')])])                    
+                             properties([parameters([choice(choices: ['Release', 'Hotfix'], description: 'Please select the way of Deployment', name: 'ENVIRONMENT')])])                    
                             // def INPUT_PARAMS = input message: 'Approval for Release Deployment', ok: 'Next', parameters: [choice(name: 'ENVIRONMENT', choices: ['Release','Hotfix'].join('\n'),description: 'Please select the way of Deployment')]
                              def approver = input id: 'Deploy', message: 'Deploy to QA?', submitter: 'admin', submitterParameter: 'deploy_approver'
                              echo "This deployment was approved by ${approver}"
