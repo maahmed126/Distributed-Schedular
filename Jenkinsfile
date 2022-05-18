@@ -38,7 +38,6 @@ pipeline {
                     }
                 }
                 stage("Started Deployment to QA") {
-                    when {expression { params.ENVIRONMENT == 'Release' } }
                     steps {
                         sh 'echo Started QA release'
                     }
@@ -49,7 +48,7 @@ pipeline {
                     agent none
                     steps {
                         script {
-                            def approver = input id: 'Deploy', message: 'Deploy to UAT?', submitter: 'pavan.prabhu,admin', submitterParameter: 'deploy_approver'
+                            def approver = input id: 'Deploy', message: 'Deploy to UAT?', submitter: 'admin', submitterParameter: 'deploy_approver'
                             echo "This deployment was approved by ${approver}"
                         }
                     }
@@ -66,7 +65,7 @@ pipeline {
                     agent none
                     steps {
                         script {
-                            def approver = input id: 'Deploy', message: 'Deploy to PROD?', submitter: 'pavan.prabhu,admin', submitterParameter: 'deploy_approver'
+                            def approver = input id: 'Deploy', message: 'Deploy to PROD?', submitter: 'admin', submitterParameter: 'deploy_approver'
                             echo "This deployment was approved by ${approver}"
                         }
                     }
