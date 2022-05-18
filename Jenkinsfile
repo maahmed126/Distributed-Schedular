@@ -28,8 +28,8 @@ pipeline {
                     agent none
                     steps {
                         script {       
-                    
-                             def INPUT_PARAMS = input message: 'Approval for Release Deployment', ok: 'Next', parameters: [choice(name: 'ENVIRONMENT', choices: ['Release','Hotfix'].join('\n'),description: 'Please select the way of Deployment')]
+                            def INPUT_PARAMS = input message: 'Approval for Release Deployment', ok: 'Next',properties([parameters([choice(choices: ['Release', 'Hotfix'], description: 'Please select the way of Deployment', name: 'ENVIRONMENT')])])                    
+                            // def INPUT_PARAMS = input message: 'Approval for Release Deployment', ok: 'Next', parameters: [choice(name: 'ENVIRONMENT', choices: ['Release','Hotfix'].join('\n'),description: 'Please select the way of Deployment')]
                              def approver = input id: 'Deploy', message: 'Deploy to QA?', submitter: 'admin', submitterParameter: 'deploy_approver'
                              echo "This deployment was approved by ${approver}"
                         }
