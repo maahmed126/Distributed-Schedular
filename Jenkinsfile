@@ -41,7 +41,7 @@ pipeline {
                     }
                 }
                 stage("Started Deployment to QA") {
-                    when {expression { params.choices == 'Release' } }
+                     when { branch "release/sprint/*" }  
                     steps {
                         sh 'echo Started QA release'
                     }
@@ -58,13 +58,13 @@ pipeline {
                     }
                 }
                 stage("Started Deployment to UAT") {
-                    when {expression { params.choices == 'Release' } }
+                    when { branch "release/sprint/*" }  
                     steps {
                         sh 'echo Started UAT release'
                     }
                 }
                 stage('Approval to PROD') {
-                    when {expression { params.choices == 'Release' } }
+                    when { branch "release/sprint/*" }  
                     // no agent is used, so executors are not used up when waiting for approvals
                     agent none
                     steps {
