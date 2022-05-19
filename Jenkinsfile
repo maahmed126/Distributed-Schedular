@@ -41,13 +41,13 @@ pipeline {
                     }
                 }
                 stage("Started Deployment to QA") {
-                     when { Environment "Release" }  
+                     when { Environment == "Release" }  
                     steps {
                         sh 'echo Started QA release'
                     }
                 }
                 stage('Approval to UAT') {
-                     when { Environment "Release" }  
+                     when { Environment == "Release" }  
                     // no agent is used, so executors are not used up when waiting for approvals
                     agent none
                     steps {
@@ -58,7 +58,7 @@ pipeline {
                     }
                 }
                 stage("Started Deployment to UAT") {
-                    when { Environment "Release" }    
+                    when { Environment == "Release" }    
                     steps {
                         sh 'echo Started UAT release'
                     }
