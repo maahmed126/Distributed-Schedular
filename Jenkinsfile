@@ -34,20 +34,20 @@ pipeline {
                             // when {expression { params.ENVIRONMENT == 'Release' } }
                             // def INPUT_PARAMS = input message: 'Approval for Release Deployment', ok: 'Next', parameters: [choice(name: 'ENVIRONMENT', choices: ['Release','Hotfix'],description: 'Please select the way of Deployment')]
                             def INPUT_PARAMS = input message: 'Approval for Release Deployment',parameters: [choice(choices: ['Release', 'Hotfix'], name: 'Environment')]
-
+                            env.Environment=INPUT_PARAMS
                              def approver = input id: 'Deploy', message: 'Deploy to QA?', submitter: 'admin', submitterParameter: 'deploy_approver'
                              echo "This deployment was approved by ${approver}"
                         }
                     }
                 }
                 stage("Started Deployment to QA") {
-                     when { Environment == "Release" }  
+                    when { expression { env.Environment == "Release" } }
                     steps {
                         sh 'echo Started QA release'
                     }
                 }
                 stage('Approval to UAT') {
-                     when { Environment == "Release" }  
+                    when { expression { env.Environment == "Release" } }
                     // no agent is used, so executors are not used up when waiting for approvals
                     agent none
                     steps {
@@ -58,13 +58,13 @@ pipeline {
                     }
                 }
                 stage("Started Deployment to UAT") {
-                    when { Environment == "Release" }    
+                    when { expression { env.Environment == "Release" } }
                     steps {
                         sh 'echo Started UAT release'
                     }
                 }
                 stage('Approval to PROD') {
-                    when { branch "release/sprint/*" }  
+                    when { expression { env.Environment == "Release" } } 
                     // no agent is used, so executors are not used up when waiting for approvals
                     agent none
                     steps {
