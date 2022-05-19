@@ -30,14 +30,18 @@ pipeline {
                     steps {
                        
                         script {       
-                             properties([parameters([choice(choices: ['Release', 'Hotfix'], description: 'Please select the way of Deployment', name: 'ENVIRONMENT')])])                    
+                            // properties([parameters([choice(choices: ['Release', 'Hotfix'], description: 'Please select the way of Deployment', name: 'ENVIRONMENT')])])
+                            // when {expression { params.ENVIRONMENT == 'Release' } }
                             // def INPUT_PARAMS = input message: 'Approval for Release Deployment', ok: 'Next', parameters: [choice(name: 'ENVIRONMENT', choices: ['Release','Hotfix'].join('\n'),description: 'Please select the way of Deployment')]
+                            def INPUT_PARAMS = input message: 'Approval for Release Deployment', ok: 'Next', parameters: [choice(choices: ['Release', 'Hotfix'], description: 'Please select the way of Deployment', name: 'ENVIRONMENT')]
+
                              def approver = input id: 'Deploy', message: 'Deploy to QA?', submitter: 'admin', submitterParameter: 'deploy_approver'
                              echo "This deployment was approved by ${approver}"
                         }
                     }
                 }
                 stage("Started Deployment to QA") {
+                    when {expression { params.ENVIRONMENT == 'Release' } }
                     steps {
                         sh 'echo Started QA release'
                     }
@@ -48,7 +52,7 @@ pipeline {
                     agent none
                     steps {
                         script {
-                            def approver = input id: 'Deploy', message: 'Deploy to UAT?', submitter: 'admin', submitterParameter: 'deploy_approver'
+                            def approver = input id: 'Deploy', message: 'Deploy to UAT?', submitter: 'pavan.prabhu,admin', submitterParameter: 'deploy_approver'
                             echo "This deployment was approved by ${approver}"
                         }
                     }
@@ -65,7 +69,7 @@ pipeline {
                     agent none
                     steps {
                         script {
-                            def approver = input id: 'Deploy', message: 'Deploy to PROD?', submitter: 'admin', submitterParameter: 'deploy_approver'
+                            def approver = input id: 'Deploy', message: 'Deploy to PROD?', submitter: 'pavan.prabhu,admin', submitterParameter: 'deploy_approver'
                             echo "This deployment was approved by ${approver}"
                         }
                     }
