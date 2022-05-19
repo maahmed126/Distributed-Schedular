@@ -33,8 +33,6 @@ pipeline {
                             // properties([parameters([choice(choices: ['Release', 'Hotfix'], description: 'Please select the way of Deployment', name: 'ENVIRONMENT')])])
                             // when {expression { params.ENVIRONMENT == 'Release' } }
                              //def INPUT_PARAMS = input message: 'Approval for Release Deployment', ok: 'Next', parameters: [choice(name: 'ENVIRONMENT', choices: ['Release','Hotfix'],description: 'Please select the way of Deployment')]
-                              def INPUT_PARAMS = input message: 'Select the way of Deployment', parameters: [text(defaultValue: '''Release
-Hotfix''', name: 'Environment')]
 
                              def approver = input id: 'Deploy', message: 'Deploy to QA?', submitter: 'admin', submitterParameter: 'deploy_approver'
                              echo "This deployment was approved by ${approver}"
